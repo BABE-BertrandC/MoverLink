@@ -4,7 +4,7 @@
     <Declaration><![CDATA[INTERFACE I_Position EXTENDS I_PosMover
 ]]></Declaration>
     <Property Name="RequestedStep" Id="{04ed390e-b31b-40d6-ac18-4f6ca9de7e32}">
-      <Declaration><![CDATA[PROPERTY RequestedStep : INT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY RequestedStep : UDINT]]></Declaration>
       <Get Name="Get" Id="{68767cb3-ce14-467d-afa2-dbd567bec1c2}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

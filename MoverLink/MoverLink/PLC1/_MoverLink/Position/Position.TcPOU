@@ -10,8 +10,8 @@ VAR
 	_position		: LREAL;
 	_enableRequest 	: BOOL;
 	_IMover			: I_MoverPos;
-	_requestStep 	: INT;
-	_posID				: UDINT;
+	_requestStep 	: UDINT;
+	_posID			: UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -91,7 +91,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="RequestedStep" Id="{de5c08fa-11b8-4863-86c0-8cf94dc3b7ab}">
-      <Declaration><![CDATA[PROPERTY RequestedStep : INT
+      <Declaration><![CDATA[PROPERTY RequestedStep : UDINT
 ]]></Declaration>
       <Get Name="Get" Id="{e50c3b44-0088-4672-b2ac-804db80a7b1f}">
         <Declaration><![CDATA[VAR

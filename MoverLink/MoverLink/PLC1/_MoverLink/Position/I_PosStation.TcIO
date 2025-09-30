@@ -30,7 +30,7 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Property Name="RequestedStep" Id="{cc77b5be-5c81-4526-9224-f8271f42e456}">
-      <Declaration><![CDATA[PROPERTY RequestedStep : INT]]></Declaration>
+      <Declaration><![CDATA[PROPERTY RequestedStep : UDINT]]></Declaration>
       <Set Name="Set" Id="{9b67bfe0-375e-4621-aad7-3251c845e514}">
         <Declaration><![CDATA[VAR
 END_VAR

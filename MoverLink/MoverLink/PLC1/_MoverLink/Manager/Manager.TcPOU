@@ -51,12 +51,15 @@ END_VAR]]></Declaration>
         <ST><![CDATA[// Call Positions
 IMover := 0;
 FOR i:=1 TO _PosCount DO
-	IF _IPos[i].RequestMover THEN
-		IMover := _FindUnlinkedMoverWithStep(_Ipos[i].RequestedStep);
-		IF IMover <> 0 THEN
-			_Ipos[i].SetMoverLink(IMover);
-			IMover.SetPosLink(_IPos[i]);	
-		END_IF	
+	IPos := _IPos[i];
+	IF IPos <> 0 THEN
+		IF IPos.RequestMover THEN
+			IMover := _FindUnlinkedMoverWithStep(Ipos.RequestedStep);
+			IF IMover <> 0 THEN
+				Ipos.SetMoverLink(IMover);
+				IMover.SetPosLink(IPos);	
+			END_IF	
+		END_IF
 	END_IF
 END_FOR
 
