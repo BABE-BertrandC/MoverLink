@@ -9,8 +9,8 @@ END_VAR
 VAR
 	_IMover 		: ARRAY [1..SETTINGS.MAX_MOVERS] OF I_Mover;
 	_moverCount 	: INT;
-	_IPos	: ARRAY [1..SETTINGS.MAX_POSITIONS] OF I_Position;
-	_PosCount : INT;
+	_IPos			: ARRAY [1..SETTINGS.MAX_POSITIONS] OF I_Position;
+	_PosCount 		: INT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -22,11 +22,16 @@ VAR_INPUT
 END_VAR
 VAR
 	i : INT;
+	IMover : I_Mover;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR i:=1 TO _moverCount DO
-	IF _IMover[i].Step = MoverStep AND NOT _IMover[i].Linked THEN
-		_FindUnlinkedMoverWithStep := _IMover[i];	
+	IMover := _IMover[i];
+	IF IMover <> 0 THEN
+		IF IMover.Step = MoverStep AND NOT IMover.Linked THEN
+			_FindUnlinkedMoverWithStep := IMover;
+		EXIT;	
+		END_IF		
 	END_IF
 END_FOR]]></ST>
       </Implementation>
@@ -40,6 +45,7 @@ VAR
 	StepRequest : UDINT;
 	IMover		: I_Mover;
 	IMoverPos 	: I_MoverPos;
+	IPos		: I_Position;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Call Positions
