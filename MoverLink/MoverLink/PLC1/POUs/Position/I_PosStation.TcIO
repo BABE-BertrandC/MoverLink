@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_PosStation" Id="{bb604d4c-e6cd-4128-9a70-0d2422fff6af}">
+    <Declaration><![CDATA[INTERFACE I_PosStation
+]]></Declaration>
+    <Method Name="EnableRequest" Id="{058d8b3b-7bb9-49c0-b13c-b097a4571105}">
+      <Declaration><![CDATA[METHOD EnableRequest : BOOL
+VAR_INPUT
+	OnOff : BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="InPosition" Id="{bf8a15f9-bff6-4784-b683-69069cd88e69}">
+      <Declaration><![CDATA[PROPERTY InPosition : BOOL]]></Declaration>
+      <Get Name="Get" Id="{afb139da-a1bb-4421-8ea2-fe5dee3f7b56}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Linked" Id="{04d8bf98-113e-468c-b48e-f96b51b75d50}">
+      <Declaration><![CDATA[PROPERTY Linked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{253d21f6-64d0-41cf-a2f1-5d121ea2a9a6}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="MoverChangeStep" Id="{c47ed53a-e3e7-472b-86ef-d81b8a5b13ce}">
+      <Declaration><![CDATA[METHOD MoverChangeStep : BOOL
+VAR_INPUT
+	step : UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="RequestedStep" Id="{cc77b5be-5c81-4526-9224-f8271f42e456}">
+      <Declaration><![CDATA[PROPERTY RequestedStep : INT]]></Declaration>
+      <Set Name="Set" Id="{9b67bfe0-375e-4621-aad7-3251c845e514}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="SetAttractStep" Id="{e2b7f86c-fcda-489e-b91b-be6518d81640}">
+      <Declaration><![CDATA[METHOD SetAttractStep : BOOL
+VAR_INPUT
+	step : INT;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

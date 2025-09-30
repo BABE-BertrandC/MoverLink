@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_PosMover" Id="{4bc065f6-a9ce-4bfb-b7d8-02f12e6af33f}">
+    <Declaration><![CDATA[INTERFACE I_PosMover
+]]></Declaration>
+    <Property Name="TargetPosition" Id="{4d48894c-81f1-496b-ae1d-9c595250bb94}">
+      <Declaration><![CDATA[PROPERTY TargetPosition : LREAL]]></Declaration>
+      <Get Name="Get" Id="{17c9eee3-1f96-40d1-9334-cfdb6b9fbcae}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

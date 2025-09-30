@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="User" Id="{ee98243f-453c-42e4-bd9d-703c22eab1ba}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK User
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Station_A	: I_Station;
+	Station_B	: I_Station;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Station Specific Logic
+
+
+// Station A
+Station_A.SetPosAttractStep(1);
+
+IF Station_A.InPosition THEN
+	Station_A.SetPosMoverStep(posIndex := 1, step := 2);
+	Station_A.SetPosMoverStep(posIndex := 2, step := 2);
+	Station_A.JobDone(); // unlinking to do ***
+END_IF
+
+// Station B
+Station_B.SetPosAttractStep(2);
+
+IF Station_B.InPosition THEN
+	Station_B.SetPosMoverStep(posIndex := 1, step := 1);
+	Station_B.SetPosMoverStep(posIndex := 2, step := 1);
+	Station_B.JobDone();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{305d47c2-269a-472e-a069-2189d843821e}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	Station_01: I_Station;
+	Station_02: I_Station;   
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Station_A := Station_01;
+Station_B := Station_02;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

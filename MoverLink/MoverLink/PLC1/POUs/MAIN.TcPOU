@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="MAIN" Id="{f9ecec64-8aac-48a0-8b4b-5617ed442c3a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	Galaxy : Galaxy;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Init - First Scan Done before run Galaxy
+IF NOT Galaxy.IsInitialized THEN
+	Galaxy.Init();
+	RETURN;
+END_IF
+
+// Cyclic
+Galaxy();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

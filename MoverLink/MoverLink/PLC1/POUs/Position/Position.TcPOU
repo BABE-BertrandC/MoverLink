@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Position" Id="{0640af27-2fc8-44fa-9165-1e7a19ffa04d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Position IMPLEMENTS I_Position, I_PosStation
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_position		: LREAL;
+	_enableRequest 	: BOOL;
+	_IMover			: I_MoverPos;
+	_requestStep 	: INT;
+	_posID				: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{dddf045b-c3a5-46d1-8cc6-cb6803c75dcb}" />
+    <Method Name="EnableRequest" Id="{50846eb0-7075-4335-9ffc-b4c3c39d73de}">
+      <Declaration><![CDATA[METHOD EnableRequest : BOOL
+VAR_INPUT
+	OnOff : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_EnableRequest := OnOff;
+EnableRequest := RequestMover;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{b2662626-7fd1-4ca5-b662-eee38d3e844e}" FolderPath="Constructor\">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	position : LREAL;  
+	manager : I_RegisterPosition; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_position := position;
+manager.RegisterPosition(THIS^);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="InPosition" Id="{2140a580-6154-4bdf-9b1e-ad5c95f4078c}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY InPosition : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{38d390b9-7b5b-4697-8a64-0eee27c851fb}">
+        <Declaration><![CDATA[VAR
+	difference	: LREAL;
+	tolerance 	: LREAL := 100;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _IMover <> 0 THEN
+	difference := ABS(_position - _IMover.Position);
+	IF difference < tolerance THEN
+		InPosition := TRUE;
+	END_IF	
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Linked" Id="{68707e32-0222-48f9-8cab-195cae589404}">
+      <Declaration><![CDATA[PROPERTY Linked : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{e8e717ef-e0b2-4645-bab5-c1d06fd3fceb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Linked := _IMover <> 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="MoverChangeStep" Id="{9b4086f8-0788-46ff-994c-bcca2b222e8f}">
+      <Declaration><![CDATA[METHOD MoverChangeStep : BOOL
+VAR_INPUT
+	step	: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _IMover <> 0 THEN
+	_IMover.ChangeStep(step);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RequestedStep" Id="{de5c08fa-11b8-4863-86c0-8cf94dc3b7ab}">
+      <Declaration><![CDATA[PROPERTY RequestedStep : INT
+]]></Declaration>
+      <Get Name="Get" Id="{e50c3b44-0088-4672-b2ac-804db80a7b1f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RequestedStep := _requestStep;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{cf40b16e-1a62-446d-93a9-a8429a7bd5a7}">
+        <Declaration><![CDATA[
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_requestStep := RequestedStep;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="RequestMover" Id="{7fa1da01-6b4b-47c2-9ce2-ac14f4c935f7}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY RequestMover : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{4694d44e-c646-4c9d-b1eb-b6b0461598cb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF _IMover <> 0 THEN
+	_enableRequest := FALSE;
+END_IF
+RequestMover := _enableRequest;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetAttractStep" Id="{f85949cf-0a35-4ace-9391-7b7cad52bd71}">
+      <Declaration><![CDATA[METHOD SetAttractStep : BOOL
+VAR_INPUT
+	step	: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_requestStep := step;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetMoverLink" Id="{c57b5a31-fd28-499d-87a1-775b14df67f1}">
+      <Declaration><![CDATA[METHOD SetMoverLink : BOOL
+VAR_INPUT
+	mover : I_MoverPos;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_IMover := mover;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="TargetPosition" Id="{942bd01f-5e5a-487d-9243-d7755b08ab84}">
+      <Declaration><![CDATA[PROPERTY TargetPosition : LREAL
+]]></Declaration>
+      <Get Name="Get" Id="{45214525-edb3-4aea-bfed-c9fbc3ee2c2c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TargetPosition := _position;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

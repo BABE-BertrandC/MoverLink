@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Mover" Id="{2359cc95-eb1f-475f-950f-0dd4a4dc4b14}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Mover IMPLEMENTS I_Mover
+VAR CONSTANT
+	MAX_DATA : INT := 10;
+END_VAR
+VAR
+	_axisRef 	: AXIS_REF;
+	//_linkID		: UDINT;
+	_IPos		: I_PosMover;
+	_position	: LREAL;
+	_IMode		: I_Mode;
+	_ID			: UDINT;
+	_step		: UDINT;
+	_data		: ARRAY [1..MAX_DATA] OF LREAL;
+	_target		: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="ChangeStep" Id="{6c31488f-ae21-4f22-bdbe-fbb9896ed374}">
+      <Declaration><![CDATA[METHOD ChangeStep : BOOL
+VAR_INPUT
+	step	: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_step := step;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Cyclic" Id="{af42b007-9481-4d60-8aea-f12e455d43b4}">
+      <Declaration><![CDATA[METHOD Cyclic : BOOL
+VAR
+	inTargetPos : BOOL;
+	tolerance : LREAL := 1.0;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// In Target Position
+inTargetPos := FALSE;
+IF (ABS(_target - position) < tolerance) THEN
+	inTargetPos := TRUE;
+END_IF
+ 
+// Move
+IF _IMode.Mode = E_Mode.automatic AND NOT inTargetPos THEN
+	_position := _position + 0.6;
+	IF _position > 3000 THEN
+		_position := _position - 3000;
+	END_IF
+END_IF
+
+IF _Ipos <> 0 THEN
+	_target := _IPos.TargetPosition;	
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ErrorCode" Id="{43598883-c1ad-4d69-88bd-386a6508db73}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY ErrorCode : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{442ae90c-0a1e-4fe6-9410-98474ad5adca}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_Init" Id="{e070e80c-a14f-42d7-b5ae-7b92c470e50f}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	ID : UDINT;   
+	mode : I_Mode;
+	manager : I_RegisterMover;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[manager.RegisterMover(THIS^);
+_ID := ID;
+_IMode := mode;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ID" Id="{46a55ecd-0158-4dcf-bea7-8f329bd5171d}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY ID : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{d4dee1fa-cbc0-4ce7-814c-98b4e4b91309}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ID := _ID;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Linked" Id="{f3c2b9b4-f6e9-4eeb-8509-e8f3267d44ec}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Linked : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{7e8d3845-7dde-4499-90dc-d0456b2f12eb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Linked := _IPos <> 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="MoveToPosition" Id="{9e38c854-2c62-4431-9b32-6c8a8ab5d1e2}">
+      <Declaration><![CDATA[METHOD MoveToPosition : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Position" Id="{4747cc7e-25fa-4479-812a-079d3dcef86c}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Position : LREAL
+]]></Declaration>
+      <Get Name="Get" Id="{d36d252f-9908-4ada-b130-442016ad99ec}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Position := _position;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{fd34e7f1-c4c8-4c56-9aa9-fac754e7f2f4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="SetData" Id="{6b05eac9-b6ae-403d-b1ac-0557c6c55cc9}">
+      <Declaration><![CDATA[METHOD SetData : BOOL
+VAR_INPUT
+	index	: INT;
+	value	: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF index > 0 AND index <= MAX_DATA THEN
+	_data[index] := value;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPosLink" Id="{e326a7de-0da8-46b3-8aed-32b5881f8054}">
+      <Declaration><![CDATA[METHOD SetPosLink : BOOL
+VAR_INPUT
+	position : I_PosMover;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_IPos := position;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="State" Id="{ed9ce5fd-b36d-443b-9f70-ad967b07e4d3}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY State : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{aca6adcf-44da-49f7-8589-e646b8c20af0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f7040f92-e8a7-4cf9-a6ce-b80286f04bff}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Step" Id="{10920e3b-a3f2-41f7-8aeb-fa638111eb52}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY Step : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{42f9d3e3-efe2-46b0-9f7d-b1dbef6e632b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Step := _step;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Unlink" Id="{9551b306-a16c-4828-8465-3eb59dac4683}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD Unlink : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update" Id="{a9dc30dd-bfe3-4f0a-94fc-779ede3e86c8}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD Update : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

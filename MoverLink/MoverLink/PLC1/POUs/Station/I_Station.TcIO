@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Station" Id="{3b7371aa-5b61-48d8-b861-536b44e57f57}">
+    <Declaration><![CDATA[INTERFACE I_Station
+]]></Declaration>
+    <Method Name="Clear" Id="{593d480f-37ab-4907-8156-54c4317194a7}">
+      <Declaration><![CDATA[METHOD Clear : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Enable" Id="{cd149905-4a43-4593-a4f6-19abdb693ea9}">
+      <Declaration><![CDATA[METHOD Enable : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="InPosition" Id="{f2d4b04b-b370-4fe7-b85d-25115261eea8}">
+      <Declaration><![CDATA[PROPERTY InPosition : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ebf3a048-7cf1-4b73-8cd4-b432d8bca665}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="JobDone" Id="{6c7e61b6-6f99-4381-8683-bb2460e8382d}">
+      <Declaration><![CDATA[METHOD JobDone : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetPosAttractStep" Id="{0ca5243e-e31c-498d-a259-e2d991574f21}">
+      <Declaration><![CDATA[METHOD SetPosAttractStep : BOOL
+VAR_INPUT
+	step : INT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetPosMoverStep" Id="{8c27bf90-a502-47af-a4e1-258c5da5ca9e}">
+      <Declaration><![CDATA[METHOD SetPosMoverStep : BOOL
+VAR_INPUT
+	posIndex	: INT;
+	step		: INT;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

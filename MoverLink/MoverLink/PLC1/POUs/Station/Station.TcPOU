@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Station" Id="{e926e43a-4a7f-4871-9f1a-3910fc9e53a8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Station IMPLEMENTS I_Station
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR CONSTANT
+	MAX_POSITIONS 		: INT := 10;
+END_VAR
+VAR
+	_IPos 			: ARRAY [1..MAX_POSITIONS] OF I_PosStation;
+	_count				: INT;
+	_enableRequests 	: BOOL;
+	_emptyMode 			: BOOL;
+	_emptyEnable 		: BOOL;
+	_emptyRequest		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_EnablePositionRequests" Id="{23ba7fac-95bd-48d9-ba22-0aa7afa5f310}">
+      <Declaration><![CDATA[METHOD _EnablePositionRequests : BOOL
+VAR
+	i: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _emptyRequest AND NOT hasPositionWithLinkID THEN
+	_emptyMode := TRUE;	
+ELSE
+	_emptyMode := FALSE;	
+END_IF
+
+IF NOT _emptyMode AND NOT allPositionsLinked THEN
+	FOR i:=1 TO _count DO
+		IF NOT _IPos[i].Linked THEN
+			_IPos[i].EnableRequest(TRUE);
+		EXIT;
+		END_IF
+	END_FOR	
+END_IF
+
+IF _emptyMode THEN
+	FOR i:=1 TO _count DO
+		_IPos[i].EnableRequest(FALSE);
+	END_FOR	
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="allPositionsLinked" Id="{0a427465-0ac0-410c-8d0a-069de8fd4bd9}">
+      <Declaration><![CDATA[PROPERTY allPositionsLinked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{1e99873b-f6cd-4367-98c2-27dfdba85c7f}">
+        <Declaration><![CDATA[VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FOR i:=1 TO _count DO
+		IF NOT _IPos[i].Linked THEN
+			RETURN;
+		END_IF
+END_FOR
+allPositionsLinked := TRUE;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Clear" Id="{1812b3fa-70ff-44a1-a485-bbd4751cef9c}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD Clear : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Cyclic" Id="{ee09aa6b-2c58-4969-a885-832c83953cab}">
+      <Declaration><![CDATA[METHOD Cyclic : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_EnablePositionRequests();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Enable" Id="{7be81e20-0b7b-4e70-aaac-0574d5112a66}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD Enable : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="hasPositionWithLinkID" Id="{ccf239d4-b90b-4017-8473-223bd764bee9}">
+      <Declaration><![CDATA[PROPERTY hasPositionWithLinkID : BOOL]]></Declaration>
+      <Get Name="Get" Id="{d2482b7e-ca47-4296-a649-3cbf20eb60ce}">
+        <Declaration><![CDATA[VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FOR i:=1 TO _count DO
+//	IF _positions[i] <> 0 THEN
+		IF _IPos[i].Linked THEN
+			hasPositionWithLinkID := TRUE;
+		END_IF		
+//	END_IF
+END_FOR]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="InPosition" Id="{59a1173b-c413-4ca9-b8fd-87611d50fb11}">
+      <Declaration><![CDATA[PROPERTY InPosition : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7091f9c2-e3dd-495f-85d3-ffd6c6b2c7c7}">
+        <Declaration><![CDATA[VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF allPositionsLinked THEN
+	FOR i:=1 TO _count DO
+		IF NOT _IPos[i].InPosition THEN
+			RETURN;
+		END_IF
+	END_FOR
+	InPosition := TRUE;
+END_IF
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="JobDone" Id="{201ceef3-c14c-42bc-9bf9-7abc5c04e75f}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD JobDone : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegisterPosition" Id="{9492410c-ec40-4c9b-adcc-288d148c02e2}">
+      <Declaration><![CDATA[METHOD RegisterPosition : BOOL
+VAR_INPUT
+	position : I_PosStation;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _count < SETTINGS.MAX_POS_STATIONS THEN
+	_count := _count + 1;
+	_IPos[_count] := position;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPosAttractStep" Id="{2c126005-e501-4ca5-8b04-ea48beec6268}">
+      <Declaration><![CDATA[METHOD SetPosAttractStep : BOOL
+VAR_INPUT
+	step : INT;
+END_VAR
+VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i:= 1 TO _count DO
+	_Ipos[i].RequestedStep := step;
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPosMoverStep" Id="{15fd7509-9dc9-4861-b527-a4d293fbfe62}">
+      <Declaration><![CDATA[METHOD SetPosMoverStep : BOOL
+VAR_INPUT
+	posIndex	: INT;
+	step		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF posIndex > 0 AND posIndex <= _count THEN
+	_IPos[posIndex].MoverChangeStep(step);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

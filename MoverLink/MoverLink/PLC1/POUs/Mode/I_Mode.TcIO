@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Mode" Id="{b2658bf8-f506-4366-a44a-b5e7bb4c4ce0}">
+    <Declaration><![CDATA[INTERFACE I_Mode
+]]></Declaration>
+    <Property Name="Mode" Id="{77adbbc3-73f0-48e2-9c18-4e644011df58}">
+      <Declaration><![CDATA[PROPERTY Mode : E_Mode]]></Declaration>
+      <Get Name="Get" Id="{c145dfd3-f062-45a3-beef-fb9b527435c9}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

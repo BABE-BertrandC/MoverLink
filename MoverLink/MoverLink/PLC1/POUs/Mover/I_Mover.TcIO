@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Mover" Id="{88e38cd4-8394-40a2-aa1c-f4649c1e2306}">
+    <Declaration><![CDATA[INTERFACE I_Mover EXTENDS I_MoverPos
+]]></Declaration>
+    <Method Name="Cyclic" Id="{57530218-a4a1-4d26-b9f0-80ef1595e5ac}">
+      <Declaration><![CDATA[METHOD Cyclic : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="ErrorCode" Id="{04cc57bd-f551-47df-b97c-1caa59b3eb19}">
+      <Declaration><![CDATA[PROPERTY ErrorCode : UDINT]]></Declaration>
+      <Get Name="Get" Id="{93195d7e-270b-4fe8-82a8-91627d30f9e7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Linked" Id="{d2082c7c-f084-4a28-9d8d-9754a6d21e86}">
+      <Declaration><![CDATA[PROPERTY Linked : BOOL]]></Declaration>
+      <Get Name="Get" Id="{efb52f18-36ac-400e-b9dc-55cdbb74a5b6}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="SetPosLink" Id="{54a5ad44-1706-4fbc-bcea-7fca19f2bdc4}">
+      <Declaration><![CDATA[METHOD SetPosLink : BOOL
+VAR_INPUT
+	position : I_PosMover;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="State" Id="{eb0860e8-01ca-4e58-b300-2ad61efb52d2}">
+      <Declaration><![CDATA[PROPERTY State : UDINT]]></Declaration>
+      <Get Name="Get" Id="{0b64d9ac-fae5-4121-9115-11449e8cdaff}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{1f917c3a-54c0-4c85-b30a-9f1389387410}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="Step" Id="{9da493df-02ec-4a23-afa1-f4d6271b56b6}">
+      <Declaration><![CDATA[PROPERTY Step : UDINT]]></Declaration>
+      <Get Name="Get" Id="{f8f74bcd-6b09-4594-aaf4-e5717ab36432}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Unlink" Id="{29c21fd2-afc9-4777-b33a-9988cc23f15c}">
+      <Declaration><![CDATA[METHOD Unlink : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Update" Id="{0fb52271-36e5-43a4-82a0-7b7ce5d9b082}">
+      <Declaration><![CDATA[METHOD Update : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

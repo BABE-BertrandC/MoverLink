@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Manager" Id="{13c3e8db-89c0-4855-ae61-1add72aaab8d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Manager IMPLEMENTS I_RegisterMover, I_RegisterPosition
+VAR CONSTANT
+	MAX_MOVERS 		: INT := 10;
+	MAX_POSITIONS	: INT := 10;
+END_VAR
+VAR
+	_IMover 		: ARRAY [1..SETTINGS.MAX_MOVERS] OF I_Mover;
+	_moverCount 	: INT;
+	_IPos	: ARRAY [1..SETTINGS.MAX_POSITIONS] OF I_Position;
+	_PosCount : INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="_FindUnlinkedMoverWithStep" Id="{97ccd672-585d-4765-9d33-7f901e86f746}">
+      <Declaration><![CDATA[METHOD PRIVATE _FindUnlinkedMoverWithStep : I_Mover
+VAR_INPUT
+	MoverStep : UDINT;
+END_VAR
+VAR
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i:=1 TO _moverCount DO
+	IF _IMover[i].Step = MoverStep AND NOT _IMover[i].Linked THEN
+		_FindUnlinkedMoverWithStep := _IMover[i];	
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Cyclic" Id="{2fa8a194-e773-4fee-80d2-3115ff523d3f}">
+      <Declaration><![CDATA[METHOD Cyclic : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	i : INT;
+	StepRequest : UDINT;
+	IMover		: I_Mover;
+	IMoverPos 	: I_MoverPos;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Call Positions
+IMover := 0;
+FOR i:=1 TO _PosCount DO
+	IF _IPos[i].RequestMover THEN
+		IMover := _FindUnlinkedMoverWithStep(_Ipos[i].RequestedStep);
+		IF IMover <> 0 THEN
+			_Ipos[i].SetMoverLink(IMover);
+			IMover.SetPosLink(_IPos[i]);	
+		END_IF	
+	END_IF
+END_FOR
+
+// Call Movers
+FOR i:=1 TO _moverCount DO
+	_IMover[i].Cyclic();
+END_FOR
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegisterMover" Id="{3f37e71d-6e2f-4dd5-a4e3-6327ddbedb63}">
+      <Declaration><![CDATA[METHOD RegisterMover : BOOL
+VAR_INPUT
+	mover : I_Mover;
+END_VAR
+VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _moverCount < SETTINGS.MAX_MOVERS THEN
+//	IF mover <> 0 THEN
+		_moverCount := _moverCount + 1;
+		_IMover[_moverCount] := mover;
+		RegisterMover := TRUE;	
+//	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegisterPosition" Id="{9cebef58-b78c-40ca-ab33-33f63a042f35}">
+      <Declaration><![CDATA[METHOD RegisterPosition : BOOL
+VAR_INPUT
+	position : I_Position;
+END_VAR
+VAR
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _PosCount < SETTINGS.MAX_POSITIONS THEN
+	IF position <> 0 THEN
+		_PosCount := _PosCount + 1;
+		_IPos[_PosCount] := position;
+		RegisterPosition := TRUE;	
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

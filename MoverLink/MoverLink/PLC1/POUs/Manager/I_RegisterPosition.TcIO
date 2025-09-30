@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_RegisterPosition" Id="{1e05ceef-0262-4a21-a758-47139e8aa10c}">
+    <Declaration><![CDATA[INTERFACE I_RegisterPosition
+]]></Declaration>
+    <Method Name="RegisterPosition" Id="{8700400e-5434-4855-973a-1d39e7085e82}">
+      <Declaration><![CDATA[METHOD RegisterPosition : BOOL
+VAR_INPUT
+	position : I_Position;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

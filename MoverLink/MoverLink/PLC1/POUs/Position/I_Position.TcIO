@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Position" Id="{48028eb2-2200-4fd3-b53c-8707e9a24ba1}">
+    <Declaration><![CDATA[INTERFACE I_Position EXTENDS I_PosMover
+]]></Declaration>
+    <Property Name="RequestedStep" Id="{04ed390e-b31b-40d6-ac18-4f6ca9de7e32}">
+      <Declaration><![CDATA[PROPERTY RequestedStep : INT]]></Declaration>
+      <Get Name="Get" Id="{68767cb3-ce14-467d-afa2-dbd567bec1c2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{e3481b16-81b9-4d39-ae75-5a5085a81a3f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="RequestMover" Id="{8cca03cd-3d79-4580-9113-4bd18f29085d}">
+      <Declaration><![CDATA[PROPERTY RequestMover : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a22bf258-670e-4250-85e1-189b0613277c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="SetMoverLink" Id="{60187c0b-bede-4b3c-a1f4-276f700080c7}">
+      <Declaration><![CDATA[METHOD SetMoverLink : BOOL
+VAR_INPUT
+	mover : I_MoverPos;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

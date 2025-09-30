@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Galaxy" Id="{a5589bd6-409e-4b30-964a-c12d5a198115}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Galaxy
+VAR
+	Manager 	: Manager;
+	Mode		: Mode;
+	Mover_01 	: Mover(ID := 101, mode := Mode, manager := Manager);
+	Mover_02 	: Mover(ID := 102, mode := Mode, manager := Manager);
+	Station_A 	: Station;
+	Position_11 : Position(position := 1000, manager := Manager);
+	Position_12 : Position(position := 0900, manager := Manager);
+	Station_B 	: Station;
+	Position_21 : Position(position := 1500, manager := Manager);
+	Position_22 : Position(position := 1400, manager := Manager);
+	User		: User(Station_A, Station_B);
+	
+	// Flags
+	_initialized	: BOOL;
+	_configDone 	: BOOL;
+	
+	dummy 			: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Config
+IF NOT _configDone THEN
+	Station_A.RegisterPosition(Position_11);
+	Station_A.RegisterPosition(Position_12);	
+	Station_B.RegisterPosition(Position_21);
+	Station_B.RegisterPosition(Position_22);
+	_configDone := TRUE;		
+END_IF
+
+// User Interfaces
+User();
+
+// Cycle
+Station_A.Cyclic();
+Station_B.Cyclic();
+Manager.Cyclic();
+
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="Init" Id="{264ad53e-cb20-4ff2-a21c-5094192f030e}">
+      <Declaration><![CDATA[METHOD Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Logic
+
+_initialized := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsInitialized" Id="{841aa798-792b-4fe5-9908-7b030735289f}">
+      <Declaration><![CDATA[PROPERTY IsInitialized : BOOL]]></Declaration>
+      <Get Name="Get" Id="{78336d03-9d86-4bc9-b18a-79f2da5738ba}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsInitialized := _initialized;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

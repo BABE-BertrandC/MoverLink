@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Mode" Id="{ea1b53db-cae0-4388-a4f6-e34f5637974b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Mode IMPLEMENTS I_Mode
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_mode : E_Mode;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Mode" Id="{41b0d16b-ab20-402a-a330-4395504f379d}">
+      <Declaration><![CDATA[PROPERTY Mode : E_Mode
+]]></Declaration>
+      <Get Name="Get" Id="{b28bebd0-9c18-4f6f-95e1-4880ad08899e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Mode := _mode;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

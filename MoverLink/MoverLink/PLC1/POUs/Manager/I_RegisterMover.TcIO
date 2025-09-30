@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_RegisterMover" Id="{4b37523f-2df6-41ad-92b4-6134a7e08087}">
+    <Declaration><![CDATA[INTERFACE I_RegisterMover
+]]></Declaration>
+    <Method Name="RegisterMover" Id="{456afb0d-cc9d-417a-b09b-6924221316a8}">
+      <Declaration><![CDATA[METHOD RegisterMover : BOOL
+VAR_INPUT
+	mover : I_Mover;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

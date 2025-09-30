@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_MoverPos" Id="{8759fd6a-e9a7-4f2f-bbfb-403f88fe374d}">
+    <Declaration><![CDATA[INTERFACE I_MoverPos
+]]></Declaration>
+    <Method Name="ChangeStep" Id="{1bf0a4f5-16d9-48b8-96ca-459edb8a6339}">
+      <Declaration><![CDATA[METHOD ChangeStep : BOOL
+VAR_INPUT
+	step : UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="ID" Id="{a86fcca4-962b-4145-a7ff-2364534ed2ef}">
+      <Declaration><![CDATA[PROPERTY ID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{e6bf9d13-dca2-428b-9e80-46746d238a60}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Position" Id="{c8969d37-51d7-45ae-bf99-18c65816a161}">
+      <Declaration><![CDATA[PROPERTY Position : LREAL]]></Declaration>
+      <Get Name="Get" Id="{4eb3f04f-2a30-4ac2-8609-0be88b06bbde}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="SetData" Id="{456df2bd-33ec-4dae-90b0-1ac811984b35}">
+      <Declaration><![CDATA[METHOD SetData : BOOL
+VAR_INPUT
+	index : INT;
+	value : LREAL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
