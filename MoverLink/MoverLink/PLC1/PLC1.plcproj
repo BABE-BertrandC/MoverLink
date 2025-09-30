@@ -18,6 +18,9 @@
     <LibraryReferences>{cc750162-3d89-4154-9f6d-e0607416dff9}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClassDiagram.TcCD">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVLs\GVL.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -29,82 +32,80 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Base\Base.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Base\I_Base.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\ClassDiagram.TcCD">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\Galaxy.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Manager\Manager.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Manager\I_RegisterMover.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Manager\I_RegisterPosition.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Mode\E_Mode.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Mode\Mode.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Mode\I_Mode.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Mover\Mover.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Mover\I_Mover.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Mover\I_MoverPos.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Position\Position.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Position\I_Position.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Position\I_PosMover.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Position\I_PosStation.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Station\I_Station.TcIO">
+    <Compile Include="_MoverLink\Base\Base.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Station\Station.TcPOU">
+    <Compile Include="_MoverLink\Base\I_Base.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\User\User.TcPOU">
+    <Compile Include="_MoverLink\Manager\I_RegisterMover.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Manager\I_RegisterPosition.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Manager\Manager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Mode\E_Mode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Mode\I_Mode.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Mode\Mode.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Mover\I_Mover.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Mover\I_MoverPos.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Mover\Mover.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Position\I_Position.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Position\I_PosMover.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Position\I_PosStation.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Position\Position.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Station\I_Station.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\Station\Station.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_MoverLink\User\User.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Mover" />
-    <Folder Include="POUs\Manager" />
-    <Folder Include="POUs\Mode" />
-    <Folder Include="POUs\Base" />
-    <Folder Include="POUs\User" />
-    <Folder Include="POUs\Station" />
-    <Folder Include="POUs\Position" />
+    <Folder Include="_MoverLink" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
+    <Folder Include="_MoverLink\Base" />
+    <Folder Include="_MoverLink\Manager" />
+    <Folder Include="_MoverLink\Mode" />
+    <Folder Include="_MoverLink\Mover" />
+    <Folder Include="_MoverLink\Position" />
+    <Folder Include="_MoverLink\Station" />
+    <Folder Include="_MoverLink\User" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_MC2">
@@ -133,8 +134,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -198,14 +199,14 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Boolean">System.Boolean</Type>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>
